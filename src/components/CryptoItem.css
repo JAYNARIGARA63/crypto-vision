@@ -1,0 +1,140 @@
+/* Dark theme colors */
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-hover: #2a2a2a;
+  --text-primary: #e1e1e6;
+  --text-secondary: #a0a0a6;
+  --border-color: #2c2c2c;
+  --positive: #4ade80;
+  --negative: #f87171;
+}
+
+.crypto-item {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr 2fr;
+  padding: 20px 12px;
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+  transition: background-color 0.2s;
+  gap: 8px;
+}
+
+.crypto-item:hover {
+  background-color: var(--bg-hover);
+}
+
+.crypto-item:last-child {
+  border-bottom: none;
+}
+
+.crypto-rank {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.crypto-name {
+  display: flex;
+  gap: 12px;
+}
+
+.crypto-name-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.crypto-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.crypto-symbol {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 8px;
+}
+
+.crypto-fullname {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+}
+
+.crypto-price {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.crypto-change {
+  font-weight: 600;
+}
+
+.crypto-change.positive {
+  color: var(--positive);
+}
+
+.crypto-change.negative {
+  color: var(--negative);
+}
+
+.crypto-market-cap {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.crypto-chart {
+  height: 60px;
+  position: relative;
+}
+
+.chart-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .crypto-item {
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1.5fr 1.5fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .crypto-item {
+    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
+  }
+
+  .crypto-chart {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .crypto-item {
+    grid-template-columns: 0.5fr 2fr 1fr 1fr;
+    padding: 16px 8px;
+  }
+
+  .crypto-market-cap {
+    display: none;
+  }
+
+  .crypto-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .crypto-item {
+    grid-template-columns: 0.5fr 2fr 1fr;
+    gap: 4px;
+  }
+
+  .crypto-change {
+    display: none;
+  }
+
+  .crypto-name {
+    gap: 8px;
+  }
+}

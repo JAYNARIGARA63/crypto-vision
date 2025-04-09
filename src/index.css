@@ -1,0 +1,242 @@
+:root {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-hover: #2a2a2a;
+  --text-primary: #e1e1e6;
+  --text-secondary: #a0a0a6;
+  --border-color: #2c2c2c;
+  --accent: #3772ff;
+  --positive: #4ade80;
+  --negative: #f87171;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0e0e23;
+  color: white;
+}
+
+/* General reset */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Main navbar container */
+.navbar {
+  background-color: var(--bg-primary);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Left side of navbar with logo and desktop links */
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo styling */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.navbar-logo img {
+  height: 32px;
+  margin-right: 0.5rem;
+}
+
+/* Desktop navigation links */
+.navbar-links {
+  display: flex;
+  gap: 1rem;
+  margin-left: 2rem;
+}
+
+.navbar-links a {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  background-color: #1f1f3a;
+}
+
+/* Right side of navbar with wallet button and menu toggle */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Menu toggle button - hidden on desktop */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: transform 0.3s ease;
+}
+
+.menu-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Wallet button styling */
+.wallet-button {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.wallet-button:hover {
+  background-color: #1f1f3a;
+  transform: translateY(-2px);
+}
+
+/* Mobile menu container - fixed position relative to viewport */
+.mobile-menu {
+  /* Hidden by default */
+  display: none;
+  flex-direction: column;
+  background-color: #0a0a1f;
+  /* Fixed position attaches to viewport */
+  position: fixed;
+  /* Position coordinates - cover entire screen below navbar */
+  top: 64px; /* Match navbar height - adjust if needed */
+  left: 0;
+  right: 0;
+  bottom: 0; /* Extend to bottom of screen */
+  z-index: 999;
+  /* Styling */
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Animation properties */
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  /* Allow scrolling if menu items exceed screen height */
+  overflow-y: auto;
+}
+
+/* Mobile menu items with improved spacing and design */
+.mobile-menu a {
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  transition: background 0.3s;
+  font-size: 1.1rem;
+  /* Better touch target area */
+  display: block;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu a:last-of-type {
+  border-bottom: none;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.active {
+  background-color: #1f1f3a;
+}
+
+/* Special styling for wallet button in mobile menu */
+.mobile-menu .wallet-button {
+  margin-top: 1rem;
+  text-align: center;
+  width: 100%;
+  font-size: 1.1rem;
+  padding: 0.75rem;
+}
+
+/* Mobile menu when active */
+.mobile-menu.show {
+  display: flex;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 992px) {
+  /* Adjust spacing for medium screens */
+  .navbar-links {
+    gap: 0.5rem;
+    margin-left: 1rem;
+  }
+
+  .navbar-links a {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile view styles */
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  /* Hide desktop navigation links */
+  .navbar-links {
+    display: none;
+  }
+
+  /* Show mobile menu toggle button */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Additional mobile adjustments */
+  .navbar-logo {
+    font-size: 1.25rem;
+  }
+
+  .navbar-logo img {
+    height: 28px;
+  }
+
+  /* Adjust top position of mobile menu based on navbar height in mobile view */
+  .mobile-menu {
+    top: 58px; /* Adjusted for smaller navbar height on mobile */
+  }
+}
+
+/* For very small screens */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.75rem;
+  }
+
+  .wallet-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Further adjust top position for very small screens if needed */
+  .mobile-menu {
+    top: 56px;
+    padding: 1rem;
+  }
+
+  .mobile-menu a {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
