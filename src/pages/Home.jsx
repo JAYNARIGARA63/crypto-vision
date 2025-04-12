@@ -28,11 +28,6 @@ const Home = () => {
           />
         </div>
       </section>
-
-      {/* Cryptocurrency List Section */}
-      <section className="crypto-section">
-        <CryptoList />
-      </section>
     </div>
   );
 };

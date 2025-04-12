@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AuthForm.css";
 
-const AuthForm = () => {
+const AuthForm = ({ onLoginSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,41 +23,97 @@ const AuthForm = () => {
     setError("");
     setSuccess("");
 
-    const endpoint = isLogin
-      ? "https://reqres.in/api/login"
-      : "https://reqres.in/api/register";
+    // For login endpoint
+    if (isLogin) {
+      try {
+        const response = await fetch("https://reqres.in/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        });
 
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+        const data = await response.json();
 
-      const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Login failed");
+        }
 
-      if (!response.ok) {
-        throw new Error(
-          data.error || `${isLogin ? "Login" : "Registration"} failed`
-        );
+        // Success handling for login
+        setSuccess("Login successful!");
+        console.log("Login successful!", data);
+
+        // Store auth token in localStorage (if available in response)
+        if (data.token) {
+          localStorage.setItem("authToken", data.token);
+        }
+        localStorage.setItem("isLoggedIn", "true");
+
+        // Wait a short moment before redirecting
+        setTimeout(() => {
+          onLoginSuccess();
+        }, 1000);
+      } catch (error) {
+        setError(error.message);
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
       }
+    }
+    // For registration endpoint
+    else {
+      try {
+        // For Reqres.in, we know only eve.holt@reqres.in will work
+        // If using eve.holt@reqres.in, use the real API
+        if (email === "eve.holt@reqres.in") {
+          const response = await fetch("https://reqres.in/api/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email,
+              password,
+            }),
+          });
 
-      // Success handling
-      const successMessage = isLogin
-        ? "Login successful!"
-        : "Registration successful!";
-      setSuccess(successMessage);
-      console.log(successMessage, data);
-    } catch (error) {
-      setError(error.message);
-      console.error(error.message);
-    } finally {
-      setIsLoading(false);
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || "Registration failed");
+          }
+
+          // Success handling for eve.holt@reqres.in
+          setSuccess("Registration successful!");
+          console.log("Registration successful!", data);
+        }
+        // For any other email, simulate a successful registration
+        else {
+          // Simulate API delay
+          await new Promise((resolve) => setTimeout(resolve, 800));
+
+          // Mock a successful registration
+          console.log("Simulated registration for:", email);
+          setSuccess("Registration successful!");
+        }
+
+        // If registration was successful (real or simulated), switch to login view
+        setTimeout(() => {
+          setIsLogin(true);
+          setEmail("");
+          setPassword("");
+          setSuccess("Registration successful! Please login.");
+        }, 1500);
+      } catch (error) {
+        setError(error.message);
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -127,6 +183,11 @@ const AuthForm = () => {
           <p>Test Credentials for Reqres.in:</p>
           <p>Email: eve.holt@reqres.in</p>
           <p>Password: pistol (or any password)</p>
+          {!isLogin && (
+            <p className="note">
+              Note: For demo purposes, any registration will simulate success
+            </p>
+          )}
         </div>
       </div>
     </div>
